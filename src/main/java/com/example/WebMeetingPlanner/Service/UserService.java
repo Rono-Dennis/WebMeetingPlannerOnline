@@ -120,6 +120,23 @@ public class UserService {
         return userRepo.findByResetPasswordToken(token);
     }
 
+
+
+    public void updateResetPasswordTokens(String tokens, String email) throws UserNotFoundException {
+        User user = userRepo.findByEmail(email);
+        if (user != null) {
+            user.setSetPasswordToken(tokens);
+            userRepo.save(user);
+        } else {
+            throw new UserNotFoundException("Could not find any User with the email " + email);
+        }
+    }
+
+    public User getBySetPasswordTokens(String tokens) {
+        return userRepo.findBySetPasswordToken(tokens);
+    }
+
+
 //    public  User getByEmail(String email)
 //    {
 //        return userRepo.updateFailedAttempts(0, email);

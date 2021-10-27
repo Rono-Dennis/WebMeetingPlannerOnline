@@ -191,9 +191,21 @@ public class AppController {
 
         return "add_users";
     }
+//
+//    @PostMapping("/process")
+//    public String addusers(User user)
+//    {
+//        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+//        String encodedpassword=encoder.encode(user.getPassword());
+//        user.setPassword(encodedpassword);
+//        user.setEnabled(true);
+//
+//        repo.save(user);
+//        return "add_users";
+//    }
 
     @PostMapping("/process")
-    public String addusers(User user)
+    public String adduser(User user)
     {
         BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
         String encodedpassword=encoder.encode(user.getPassword());
@@ -203,7 +215,6 @@ public class AppController {
         repo.save(user);
         return "forget_password";
     }
-
 
     @GetMapping(value = "/login")
     public String login (){
@@ -215,49 +226,43 @@ public class AppController {
     public class LoginController {
 
         // Login form with error
-        @GetMapping("/login-error")
+        @GetMapping("/error-login")
         public String loginError(Model model) {
             model.addAttribute("loginError", true);
             return "login";
-        }}
+        }
+    }
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm(Model model) {
         model.addAttribute("pageTitle","forgot_password");
-        return "forget_password";
+        return "forgot_password";
     }
 
-//    @GetMapping("/add_users")
-//    public String changePassword(Model model) {
-//        model.addAttribute("page","add_users");
-//        return "add_users";
-//    }
 
-    @PostMapping("/add_users")
+
+    @PostMapping("/forget_password")
     public String UserEnterPassword(HttpServletRequest request, Model model) {
         String email = request.getParameter("email");
-        String token = RandomString.make(30);
+        String tokens = RandomString.make(30);
 
 
         try {
-            userService.updateResetPasswordToken(token, email);
-            String resetPasswordLink = UtilityPassword.getSiteURL(request) + "/reset_password?token=" + token;
+            userService.updateResetPasswordTokens(tokens, email);
+            String resetPasswordLink = UtilityPassword.getSiteURL(request) + "/reset_password?token=" + tokens;
 
 
 
-            sendEmail(email, resetPasswordLink);
-            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
+            sendEmails(email, resetPasswordLink);
+            model.addAttribute("message", "We have sent a set password link to the user email. Please check.");
 
         } catch (UserNotFoundException ex) {
             model.addAttribute("error", ex.getMessage());
         } catch (UnsupportedEncodingException | MessagingException e) {
             model.addAttribute("error",  "error while sending email");
         }
-//        catch (UnsupportedEncodingException | MessagingException e) {
-//            model.addAttribute("error", "Error while sending email");
-//        }
 
-        return "send_password";
+        return "forget_password";
     }
 
 
@@ -281,11 +286,33 @@ public class AppController {
         } catch (UnsupportedEncodingException | MessagingException e) {
             model.addAttribute("error",  "error while sending email");
         }
-//        catch (UnsupportedEncodingException | MessagingException e) {
-//            model.addAttribute("error", "Error while sending email");
-//        }
 
-        return "/forget_password";
+        return "forgot_password";
+    }
+
+    private void sendEmails(String email, String resetPasswordLink)
+            throws MessagingException, UnsupportedEncodingException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("qualitywriter331@gmail.com", "Tracom/Pergamon");
+        helper.setTo(email);
+
+        String subject = "Here's the link to set your password";
+
+        String content = "<p>Hello,</p>"
+                + "<p>You have been requested by the admin to set your password to access the meetings page.</p>"
+                + "<p>Click the link below to set your password:</p>"
+                + "<p><a href=\"" + resetPasswordLink + "\">set my password</a></p>"
+                + "<br>"
+                + "<p>Ignore this email if does not concerns you, "
+                + "or you have not made the request.</p>";
+
+        helper.setSubject(subject);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
     }
 
     private void sendEmail(String email, String resetPasswordLink)
@@ -326,6 +353,18 @@ public class AppController {
         return "reset_password_form";
     }
 
+    @GetMapping("/reset_passwords")
+    public String showResetPasswordForms(@Param(value = "token") String tokens, Model model) {
+        User user = userService.getBySetPasswordTokens(tokens);
+        model.addAttribute("token", tokens);
+
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+            return "messages";
+        }
+
+        return "reset_password_forms";
+    }
     @PostMapping("/reset_password")
     public String processResetPassword(HttpServletRequest request, Model model) {
         String token = request.getParameter("token");
@@ -344,6 +383,26 @@ public class AppController {
         }
 
         return "message";
+    }
+
+    @PostMapping("/reset_passwords")
+    public String processResetPasswords(HttpServletRequest request, Model model) {
+        String tokens = request.getParameter("token");
+        String password = request.getParameter("password");
+
+        User user = userService.getBySetPasswordTokens(tokens);
+        model.addAttribute("title", "Reset your password");
+
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+            return "messages";
+        } else {
+            userService.updatePassword(user, password);
+
+            model.addAttribute("message", "You have successfully set your password.");
+        }
+
+        return "messages";
     }
 
 }

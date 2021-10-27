@@ -75,20 +75,20 @@
                             <div class="form-group row m-3">
                                 <label class="col-form-label col-4">Confirm Email</label>
                                 <div class="col-8">
-                                    <input type="email" name="email" class="form-control" placeholder="Confirm your e-mail" required autofocus/>
+                                    <input type="email" name="email" class="form-control" placeholder="Enter User e-mail" required autofocus/>
                                 </div>
                             </div>
 
                             <div class="form-group row m-3">
                                 <label class="col-form-label col-4">FirstName</label>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" th:field="*{firstName}" required minlength="2" maxlength="20">
+                                    <input type="text" class="form-control" th:field="*{firstName}" placeholder="Enter firstname" required minlength="2" maxlength="20">
                                 </div>
                             </div>
                             <div class="form-group row m-3">
                                 <label class="col-form-label col-4">LastName</label>
                                 <div class="col-8">
-                                    <input type="text" class="form-control" th:field="*{lastName}" required minlength="2" maxlength="20">
+                                    <input type="text" class="form-control" th:field="*{lastName}" placeholder="Enter lastname" required minlength="2" maxlength="20">
                                 </div>
                             </div>
 
@@ -107,7 +107,7 @@
                             </div>
                             <div class="form-group m-3">
 <!--                                <input type="submit" value="Change Password" class="btn btn-primary" />-->
-                                <button type="submit" class="btn btn-primary">Sign Up</button>
+                                <button type="submit" class="btn btn-primary">Add User</button>
                             </div>
                         </div>
                     </form>

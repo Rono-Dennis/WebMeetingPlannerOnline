@@ -27,6 +27,9 @@ public class User {
     @Column(name = "reset_password_token", length = 255)
     private String resetPasswordToken;
 
+    @Column(name = "set_password_token", length = 255)
+    private String setPasswordToken;
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -45,15 +48,15 @@ public class User {
     public User() {
     }
 
-    public User(long id, String email, String password, String firstName, String lastName, String resetPasswordToken, boolean enabled , Set<Role> roles) {
+    public User(long id, String email, String password, String firstName, String lastName, String resetPasswordToken, String setPasswordToken, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.resetPasswordToken = resetPasswordToken;
+        this.setPasswordToken = setPasswordToken;
         this.enabled = enabled;
-
         this.roles = roles;
     }
 
@@ -66,8 +69,8 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", resetPasswordToken='" + resetPasswordToken + '\'' +
+                ", setPasswordToken='" + setPasswordToken + '\'' +
                 ", enabled=" + enabled +
-
                 ", roles=" + roles +
                 '}';
     }
@@ -120,16 +123,21 @@ public class User {
         this.resetPasswordToken = resetPasswordToken;
     }
 
+    public String getSetPasswordToken() {
+        return setPasswordToken;
+    }
+
+    public void setSetPasswordToken(String setPasswordToken) {
+        this.setPasswordToken = setPasswordToken;
+    }
+
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-
-
 
     public Set<Role> getRoles() {
         return roles;
