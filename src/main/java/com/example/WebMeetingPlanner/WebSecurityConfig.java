@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new CustomUserDetailsService();
     }
 
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder()
     {
@@ -54,10 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
-                .antMatchers("/css/**","/js/**", "/images/**",
+                .antMatchers("/css/**","/js/**","/bootstrap/**", "/images/**","/bootstrap-datetimepicker.js/**","/tempusdominus-bootstrap-4/**","/jquery/**","/moment/**",
                         "/index", "/", "/register", "/meeting_form", "/submit-registration","/process_register","/meeting_details","/forgot_password**","/reset_password").permitAll()
                 .antMatchers("/"). hasRole("Organisation Officer")
-                .antMatchers("/user_form","/process_register", "/users/edit/**","/AdminPage/**").hasRole("Admin")
+                .antMatchers("/user_form","/AdminPage/**").hasRole("Admin")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -70,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
 
                 .defaultSuccessUrl("/index",  true)
-                .failureUrl("/error-login")
+                .failureUrl("/login-error")
                 .and()
                 .logout()
                 .logoutUrl("/logout")

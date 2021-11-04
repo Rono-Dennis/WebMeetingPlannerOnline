@@ -30,8 +30,14 @@
             <a th:href="@{/Saveroom}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                 <i class="fas fa-project-diagram me-2"></i> View saved rooms
             </a>
-            <a  th:href="@{/add_users}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+            <a   sec:authorize="hasAnyAuthority('Admin')" th:href="@{/add_user}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                 <i class="fas fa-project-diagram me-2"></i>  Add User
+            </a>
+            <a  sec:authorize="hasAnyAuthority('Admin')" th:href="@{/list_users}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-project-diagram me-2"></i>  View Users
+            </a>
+            <a  sec:authorize="hasAnyAuthority('Admin')" th:href="@{/Addresource}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                <i class="fas fa-project-diagram me-2"></i>  Add Resources Users
             </a>
             <a th:action="@{/logout}" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
                 <i class="fas fa-project-diagram me-2"></i> Logout

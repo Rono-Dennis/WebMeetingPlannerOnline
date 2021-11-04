@@ -70,6 +70,7 @@
                                 <label class="col-form-label col-4">Confirm Email</label>
                                 <div class="col-8">
                                     <input type="email" th:field="*{email}" class="form-control" placeholder="Enter User e-mail" required autofocus/>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                                 </div>
                             </div>
 

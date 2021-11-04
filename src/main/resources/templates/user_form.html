@@ -34,9 +34,36 @@
             <div class="collapse show" id="navbarSupportedContent" style="margin-left: 0;">
                 <!--		<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
 
-<!--                sidebar starts here-->
-                <div th:replace="fragments/adminSidebar :: div"></div>
-                <div th:replace="fragments/Sidebar :: div"></div>
+                <div class="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase">
+                    <i class="fas fa-user-secret me-2"></i>MeetingPlanner
+                </div>
+
+                <div class="list-group list-group-flush my-3">
+                    <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                    <a th:href="@{/meeting_form}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-project-diagram me-2"></i> Add Meeting
+                    </a>
+                    <a th:href="@{/meetingdetails}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-project-diagram me-2"></i> View Meetings
+                    </a>
+                    <a th:href="@{/Addrooms}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-paperclip me-2"></i> Add Rooms
+                    </a>
+
+                    <a th:href="@{/Saveroom}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-comment-dot me-2"></i> View saved rooms
+                    </a>
+                    <a th:href="@{/add_users}"  class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-map-marker-alt me-2"></i>  Add User
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                        <i class="fas fa-project-diagram me-2"></i> Logout
+                    </a>
+
+                </div>
+
             </div>
         </div>
         <!--sidebar ends here-->
@@ -94,6 +121,15 @@
                                 </div>
                             </div>
 
+
+<!--                            <div class="form-check form-check-inline">-->
+<!--                                <label class="col-form-label col-4">Assign Roles:</label><br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                                <input type="radio" value="Once" class="form-check-input" name="eventPattern" id="Once" th:field="*{eventPattern}"/>Once &nbsp&nbsp-->
+<!--                                <input type="radio" value="Twice" class="form-check-input" name="eventPattern" id="Twice" th:field="*{eventPattern}"/>Twice &nbsp&nbsp-->
+<!--                                <input type="radio" value="More" class="form-check-input" name="eventPattern" id="More" th:field="*{eventPattern}"/>More-->
+<!--                            </div>-->
+
+
                             <div class="form-group row m-3">
                                 <label class="col-form-label col-4">Assign Roles</label>
                                 <div class="col-8">
@@ -118,10 +154,28 @@
 
             <!--            ////////////////////////////////////// content ends here-->
 
-            <!--          foot start-->
-            <div th:replace="fragments/foot :: div"></div>
+            <div class="container-fluid p-5" style="background:#EFDECD;">
+                <h1 class="display-4 mb-4">Other roles</h1>
+                <div class="card-deck mx-3">
+                    <div class="card">
+                        <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+                        <div class="card-body"> Some more card content </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+                        <div class="card-body"> Some more card content </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+                        <div class="card-body"> Some more card content </div>
+                    </div>
+                    <div class="card">
+                        <img class="card-img-top" src="/images/pathToYourImage.png" alt="Card image cap">
+                        <div class="card-body"> Some more card content </div>
+                    </div>
+                </div>
+            </div>
 
-            <!--foot end-->
 
         </div>
 

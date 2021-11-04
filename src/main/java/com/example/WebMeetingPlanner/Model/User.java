@@ -2,12 +2,14 @@ package com.example.WebMeetingPlanner.Model;
 
 
 
-import com.example.WebMeetingPlanner.Model.Role;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
-
+import lombok.Data;
+@Data
 @Entity
 @Table(name="user")
 public class User {
@@ -15,12 +17,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private long id;
+    @Email(message = "{fooCommand.email.email.message}")
+    @Email
+    @NotBlank(message = "Email is required")
     @Column(nullable = false, unique = true, length = 100)
     private String email;
+    @NotBlank(message = "Password is required")
     @Column(nullable = false, length = 64)
     private String password;
+    @NotBlank(message = "firstname is required")
     @Column(nullable = false, length = 20)
     private String firstName;
+    @NotBlank(message = "lastname is required")
     @Column(nullable = false, length = 20)
     private String lastName;
 

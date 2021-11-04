@@ -57,14 +57,20 @@
             <div class="container text-center">
                 <div>
                     <h1>Register User</h1>
+                    <p th:if="${registerError}"  class="alert alert-danger" role="alert">Email already exist</p>
                     <form th:action="@{/process_register}" method="post"
                           th:object="${user}" style="max-width: 600px; margin: 0 auto">
-
+                        <ul class="global-errors" th:if="${#fields.hasErrors('global')}">
+                            <li class="text-danger" th:each="err : ${#fields.errors('global')}" th:text="${err}">Input is incorrect</li>
+                        </ul>
                         <div>
                             <div class="form-group row m-3">
                                 <label class="col-form-label col-4">Email</label>
                                 <div class="col-8">
                                     <input type="email" class="form-control" th:field="*{email}" placeholder="Enter Email" value="Enter email" required autofocus>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                    <!--     </div>
+                                       <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>-->
                                 </div>
                             </div>
                             <div class="form-group row m-3">

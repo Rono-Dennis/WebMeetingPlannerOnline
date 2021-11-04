@@ -2,6 +2,10 @@ package com.example.WebMeetingPlanner.Model;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 @Entity
 @Table(name="meeting")
 public class meeting

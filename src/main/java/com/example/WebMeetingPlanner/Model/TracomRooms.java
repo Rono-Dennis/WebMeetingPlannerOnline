@@ -2,8 +2,13 @@ package com.example.WebMeetingPlanner.Model;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
+
 @Entity
-@Table(name="tracomRooms")
+@Table(name="BoardRooms")
 public class TracomRooms
 {
     @Id
@@ -11,9 +16,29 @@ public class TracomRooms
     private long room_id;
 
     @Column(nullable = false, length = 20)
-    private String tracomrooms;
-    @Column(nullable = false, length = 20)
-    private String pergamonrooms;
+    private String rooms;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="resource_id")
+    private Resources resources;
+
+//    private List<Resources> resources = new ArrayList<Resources>();
+
+    public TracomRooms() {
+    }
+
+    public TracomRooms(long room_id, String rooms) {
+        this.room_id = room_id;
+        this.rooms = rooms;
+    }
+
+    public Resources getResources() {
+        return resources;
+    }
+
+    public void setResources(Resources resources) {
+        this.resources = resources;
+    }
 
     public long getRoom_id() {
         return room_id;
@@ -23,28 +48,11 @@ public class TracomRooms
         this.room_id = room_id;
     }
 
-    public String getTracomrooms() {
-        return tracomrooms;
+    public String getRooms() {
+        return rooms;
     }
 
-    public void setTracomrooms(String tracomrooms) {
-        this.tracomrooms = tracomrooms;
-    }
-
-    public String getPergamonrooms() {
-        return pergamonrooms;
-    }
-
-    public void setPergamonrooms(String pergamonrooms) {
-        this.pergamonrooms = pergamonrooms;
-    }
-
-    @Override
-    public String toString() {
-        return "TracomRooms{" +
-                "room_id=" + room_id +
-                ", tracomrooms='" + tracomrooms + '\'' +
-                ", pergamonrooms='" + pergamonrooms + '\'' +
-                '}';
+    public void setRooms(String rooms) {
+        this.rooms = rooms;
     }
 }
